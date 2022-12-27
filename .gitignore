@@ -3,3 +3,4 @@ __pycache__
 notes.txt
 course.txt
 course.md
+.env
