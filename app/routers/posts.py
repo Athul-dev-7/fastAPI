@@ -1,5 +1,5 @@
 from fastapi import Response, status, HTTPException, Depends, APIRouter
-from typing import List
+from typing import Optional, List
 from sqlalchemy.orm import Session
 from .. import models, schemas, oauth2
 from ..database import get_db
@@ -12,10 +12,22 @@ router = APIRouter(prefix="/posts", tags=["Posts"])
 async def get_posts(
     db: Session = Depends(get_db),
     current_user: int = Depends(oauth2.get_current_user),
+    limit: int = 100,
+    skip: int = 0,
+    search: Optional[str] = "",
 ):
     # cursor.execute(""" SELECT * FROM posts""")
     # posts = cursor.fetchall()
-    posts = db.query(models.Post).all()
+
+    # A user can see only their own posts
+    posts = (
+        db.query(models.Post)
+        .filter(models.Post.owner_id == current_user.id)
+        .filter(models.Post.title.contains(search))
+        .limit(limit)
+        .offset(skip)
+        .all()
+    )
     return posts
 
 
@@ -33,7 +45,8 @@ async def create_posts(
     # )
     # new_post = cursor.fetchone()
     # conn.commit()
-    new_post = models.Post(**post.dict())
+
+    new_post = models.Post(owner_id=current_user.id, **post.dict())
     db.add(new_post)
     db.commit()
     db.refresh(new_post)
@@ -48,11 +61,19 @@ async def get_post(
 ):
     # cursor.execute("""SELECT * FROM posts WHERE id = %s""", (str(id)))
     # post = cursor.fetchone()
+
     post = db.query(models.Post).filter(models.Post.id == id).first()
     if not post:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"post with id: {id} doesn't exist",
+        )
+
+    # A user can see only their own post
+    if post.owner_id != current_user.id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not authorized to perform requested action",
         )
     return post
 
@@ -66,11 +87,19 @@ async def delete_post(
     # cursor.execute("""DELETE FROM posts WHERE id = %s RETURNING *""", (str(id),))
     # deleted_post = cursor.fetchone()
     # conn.commit()
+
     post_query = db.query(models.Post).filter(models.Post.id == id)
     if post_query.first() == None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"post with id: {id} doesn't exists",
+        )
+
+    # A user can delete only their own post
+    if post_query.first().owner_id != current_user.id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not authorized to perform requested action",
         )
     post_query.delete(synchronize_session=False)
     db.commit()
@@ -90,11 +119,19 @@ async def update_post(
     # )
     # updated_post = cursor.fetchone()
     # conn.commit()
+
     post_query = db.query(models.Post).filter(models.Post.id == id)
     if post_query.first() == None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"post with id: {id} doesn't exists",
+        )
+
+    # A user can update only their own post
+    if post_query.first().owner_id != current_user.id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not authorized to perform requested action",
         )
     post_query.update(post.dict(), synchronize_session=False)
     db.commit()

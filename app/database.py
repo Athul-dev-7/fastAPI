@@ -18,3 +18,22 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+# DB connection for Raw SQL
+# while True:
+#     try:
+#         conn = psycopg2.connect(
+#             host="localhost",
+#             database="fastapibackend",
+#             user="root",
+#             password="password",
+#             cursor_factory=RealDictCursor,
+#         )
+#         cursor = conn.cursor()
+#         print("Database connection was successful")
+#         break
+#     except Exception as error:
+#         print("Connecting to database failed")
+#         print("Error: ", error)
+#         time.sleep(2)
