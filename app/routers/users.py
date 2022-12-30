@@ -25,10 +25,7 @@ async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     "/",
     response_model=List[schemas.UserResponse],
 )
-async def get_users(
-    db: Session = Depends(get_db),
-    current_user: int = Depends(oauth2.get_current_user),
-):
+async def get_users(db: Session = Depends(get_db)):
     posts = db.query(models.User).all()
     return posts
 
