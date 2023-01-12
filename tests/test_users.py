@@ -2,7 +2,7 @@ from jose import jwt
 from app import schemas
 from app.config import settings
 import pytest
-from tests.conftest import client, test_user
+from tests.conftest import client, test_user_one
 
 
 def test_root(client):
@@ -12,7 +12,7 @@ def test_root(client):
     assert response.status_code == 200
 
 
-def test_user_create(client):
+def test_user_one_create(client):
     response = client.post(
         "/users/", json={"email": "testuser1@gmail.com", "password": "password123"}
     )
@@ -22,10 +22,13 @@ def test_user_create(client):
     assert response.status_code == 201
 
 
-def test_login_user(client, test_user):
+def test_login_user(client, test_user_one):
     response = client.post(
         "/login",
-        data={"username": test_user["email"], "password": test_user["password"]},
+        data={
+            "username": test_user_one["email"],
+            "password": test_user_one["password"],
+        },
     )
 
     login_response = schemas.Token(**response.json())
@@ -35,7 +38,7 @@ def test_login_user(client, test_user):
         algorithms=[settings.ALGORITHM],
     )
     id = payload.get("user_id")
-    assert id == test_user["id"]
+    assert id == test_user_one["id"]
     assert login_response.token_type == "bearer"
     assert response.status_code == 200
 
