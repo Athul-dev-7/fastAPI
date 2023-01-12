@@ -49,7 +49,7 @@ This is a sample FastAPI CRUD application that uses a PostgreSQL database.
 
     -   4.  By default, PostgreSQL creates a user named `postgres` with the role `postgres`. You can connect to the PostgreSQL server as this user by running:
 
-            `sudo -u postgres psql`
+            `sudo su - postgres`
 
     -   5.  Once you are connected to the PostgreSQL server, you can create new user and database.
 
