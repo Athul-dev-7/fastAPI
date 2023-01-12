@@ -1,6 +1,6 @@
-from pydantic import Field, datetime_parse, BaseModel, EmailStr
+from pydantic import Field, BaseModel, EmailStr
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional
 
 
 class UserLogin(BaseModel):
