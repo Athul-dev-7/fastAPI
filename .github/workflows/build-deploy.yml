@@ -11,5 +11,11 @@ jobs:
     steps:
       - name: pulling git repo
         uses: actions/checkout@v3 
-      - name: say hi to das
-        run: echo "hello das"
+      - name: Install python version 3.9
+        uses:  actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: update pip
+        run: python3 -m pip install --upgrade pip
+      - name: install all dependencies
+        run: pip install -r requirements.txt 
