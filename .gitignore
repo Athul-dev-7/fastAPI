@@ -5,3 +5,5 @@ course.txt
 course.md
 .env
 .vscode
+.coverage
+htmlcov
