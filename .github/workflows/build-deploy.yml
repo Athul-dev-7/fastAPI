@@ -19,13 +19,6 @@ jobs:
       SECRET_KEY: ${{secrets.SECRET_KEY}}
       ALGORITHM: ${{secrets.ALGORITHM}}
       ACCESS_TOKEN_EXPIRE_MINUTES: ${{sh -c "expr ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}} + 0"}}
-    
-    steps:
-    - name: checking DATABASE_PORT
-      run: echo ${{secrets.DATABASE_PORT}} 
-    - name: checking ACCESS_TOKEN_EXPIRE_MINUTES
-      run: echo ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
-
 
     services:
       postgres:
@@ -58,3 +51,7 @@ jobs:
         run: |
           pip install pytest
           pytest
+      - name: checking DATABASE_PORT
+        run: echo ${{secrets.DATABASE_PORT}} 
+      - name: checking ACCESS_TOKEN_EXPIRE_MINUTES
+        run: echo ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
