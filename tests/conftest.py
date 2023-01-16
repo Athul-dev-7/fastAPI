@@ -11,8 +11,6 @@ from app import models
 
 SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.         DATABASE_HOST_NAME}:{settings.DATABASE_PORT}/{settings.DATABASE_NAME}_test"
 
-print(SQLALCHEMY_DATABASE_URL)
-
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -20,9 +18,9 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 
 @pytest.fixture
 def session():
+    Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
     db = TestingSessionLocal()
-    Base.metadata.drop_all(bind=engine)
     try:
         yield db
     finally:
