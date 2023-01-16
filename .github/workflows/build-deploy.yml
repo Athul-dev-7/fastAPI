@@ -51,8 +51,8 @@ jobs:
         run: |
           PORT=${{secrets.DATABASE_PORT}}
           EXPIRES=${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
-          echo PORT
-          echo EXPIRES
+          echo $PORT
+          echo $EXPIRES
       - name: test with pytest
         run: |
           pip install pytest
