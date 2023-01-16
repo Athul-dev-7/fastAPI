@@ -50,11 +50,9 @@ jobs:
       - name: converting string to int
         run: |
           PORT=${{secrets.DATABASE_PORT}}
-          PORT_INT=${PORT | toInt}
           EXPIRES=${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
-          EXPIRES_INT=${EXPIRES| toInt}
-          echo $PORT_INT
-          echo $EXPIRES_INT
+          echo PORT
+          echo EXPIRES
       - name: test with pytest
         run: |
           pip install pytest
