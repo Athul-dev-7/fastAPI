@@ -12,7 +12,7 @@ from app import models
 # SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.         DATABASE_HOST_NAME}:{settings.DATABASE_PORT}/{settings.DATABASE_NAME}_test"
 
 SQLALCHEMY_DATABASE_URL = (
-    "postgresql://root:password@localhost:5432/fastapibackend_test"
+    "postgresql://postgres:password@localhost:5432/fastapibackend_test"
 )
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
