@@ -56,14 +56,14 @@ jobs:
         run: pip install -r requirements.txt 
       - name: echoing secrets values 
         run: |
-          echo ${{DATABASE_HOST_NAME}}
-          echo ${{DATABASE_PORT}}
-          echo ${{DATABASE_NAME}}
-          echo ${{DATABASE_USERNAME}}
-          echo ${{DATABASE_PASSWORD}}
-          echo ${{SECRET_KEY}}
-          echo ${{ALGORITHM}}
-          echo ${{ACCESS_TOKEN_EXPIRE_MINUTES}}
+          echo $DATABASE_HOST_NAME
+          echo $DATABASE_PORT
+          echo $DATABASE_NAME
+          echo $DATABASE_USERNAME
+          echo $DATABASE_PASSWORD
+          echo $SECRET_KEY
+          echo $ALGORITHM
+          echo $ACCESS_TOKEN_EXPIRE_MINUTES
       - name: test with pytest
         run: |
           pip install pytest
