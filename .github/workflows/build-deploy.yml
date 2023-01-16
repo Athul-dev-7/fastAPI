@@ -14,7 +14,7 @@ jobs:
       DATABASE_HOST_NAME: localhost
       DATABASE_PORT:  5432
       DATABASE_NAME: fastapibackend
-      DATABASE_USERNAME: root
+      DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: password
       SECRET_KEY: 09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
       ALGORITHM: HS256
@@ -24,7 +24,8 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_HOST_AUTH_METHOD: trust
+          # POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_PASSWORD: password
           POSTGRES_DB: fastapibackend_test
         ports:
           - 5432:5432
@@ -46,10 +47,10 @@ jobs:
         run: python3 -m pip install --upgrade pip
       - name: install all dependencies
         run: pip install -r requirements.txt 
-      - name: creating Postgres database
-        run: createdb fastapibackend_test
-      - name: upgrading alembic head
-        run: alembic upgrade head
+      # - name: creating Postgres database
+      #   run: createdb fastapibackend_test
+      # - name: upgrading alembic head
+      #   run: alembic upgrade head
       - name: test with pytest
         run: |
           pip install pytest
