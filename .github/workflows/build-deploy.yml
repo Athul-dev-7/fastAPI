@@ -24,7 +24,6 @@ jobs:
       postgres:
         image: postgres
         env:
-          # POSTGRES_HOST_AUTH_METHOD: trust
           POSTGRES_PASSWORD: password
           POSTGRES_DB: fastapibackend_test
         ports:
@@ -47,10 +46,6 @@ jobs:
         run: python3 -m pip install --upgrade pip
       - name: install all dependencies
         run: pip install -r requirements.txt 
-      # - name: creating Postgres database
-      #   run: createdb fastapibackend_test
-      # - name: upgrading alembic head
-      #   run: alembic upgrade head
       - name: test with pytest
         run: |
           pip install pytest
