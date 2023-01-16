@@ -25,7 +25,7 @@ jobs:
         image: postgres
         env:
           POSTGRES_HOST_AUTH_METHOD: trust
-          POSTGRES_DB: ${{secrets.DATABASE_NAME}}
+          POSTGRES_DB: ${{secrets.DATABASE_NAME}}_test
         ports:
           - 5432:5432
         options: >-
@@ -47,7 +47,7 @@ jobs:
       - name: install all dependencies
         run: pip install -r requirements.txt 
       - name: creating Postgres database
-        run: createdb fastapibackend_test
+        run: createdb ${{secrets.DATABASE_NAME}}_test
       - name: upgrading alembic head
         run: alembic upgrade head
       - name: test with pytest
