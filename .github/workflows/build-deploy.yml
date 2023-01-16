@@ -12,13 +12,13 @@ jobs:
 
     env:
       DATABASE_HOST_NAME: ${{secrets.DATABASE_HOST_NAME}}
-      DATABASE_PORT:  ${{secrets.DATABASE_PORT}}
+      DATABASE_PORT:  5432
       DATABASE_NAME: ${{secrets.DATABASE_NAME}}
       DATABASE_USERNAME: ${{secrets.DATABASE_USERNAME}}
       DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
       SECRET_KEY: ${{secrets.SECRET_KEY}}
       ALGORITHM: ${{secrets.ALGORITHM}}
-      ACCESS_TOKEN_EXPIRE_MINUTES: ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
+      ACCESS_TOKEN_EXPIRE_MINUTES: 30
 
     services:
       postgres:
