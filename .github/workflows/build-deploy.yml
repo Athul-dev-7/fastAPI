@@ -12,13 +12,13 @@ jobs:
 
     env:
       DATABASE_HOST_NAME: ${{secrets.DATABASE_HOST_NAME}}
-      DATABASE_PORT:  ${{sh -c "expr ${{secrets.DATABASE_PORT}} + 0"}}
+      DATABASE_PORT:  ${{steps.set_port.outputs.port}}
       DATABASE_NAME: ${{secrets.DATABASE_NAME}}
       DATABASE_USERNAME: ${{secrets.DATABASE_USERNAME}}
       DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
       SECRET_KEY: ${{secrets.SECRET_KEY}}
       ALGORITHM: ${{secrets.ALGORITHM}}
-      ACCESS_TOKEN_EXPIRE_MINUTES: ${{sh -c "expr ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}} + 0"}}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${{steps.set_expire.outputs.expire}}
 
     services:
       postgres:
@@ -51,7 +51,9 @@ jobs:
         run: |
           pip install pytest
           pytest
-      - name: checking DATABASE_PORT
-        run: echo ${{secrets.DATABASE_PORT}} 
-      - name: checking ACCESS_TOKEN_EXPIRE_MINUTES
-        run: echo ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
+      - name: set DATABASE_PORT
+        run: echo "expr ${{secrets.DATABASE_PORT}} + 0" | sh
+        id: port
+      - name: set ACCESS_TOKEN_EXPIRE_MINUTES
+        run: echo "expr ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}} + 0" | sh
+        id: expire
