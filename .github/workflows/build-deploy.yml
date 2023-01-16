@@ -12,13 +12,13 @@ jobs:
 
     env:
       DATABASE_HOST_NAME: ${{secrets.DATABASE_HOST_NAME}}
-      DATABASE_PORT:  ${{secrets.DATABASE_PORT | toInt}}
+      DATABASE_PORT:  ${{secrets.DATABASE_PORT}}
       DATABASE_NAME: ${{secrets.DATABASE_NAME}}
       DATABASE_USERNAME: ${{secrets.DATABASE_USERNAME}}
       DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
       SECRET_KEY: ${{secrets.SECRET_KEY}}
       ALGORITHM: ${{secrets.ALGORITHM}}
-      ACCESS_TOKEN_EXPIRE_MINUTES: ${{ACCESS_TOKEN_EXPIRE_MINUTES | toInt}}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${{ACCESS_TOKEN_EXPIRE_MINUTES}}
 
     services:
       postgres:
@@ -47,6 +47,14 @@ jobs:
         run: python3 -m pip install --upgrade pip
       - name: install all dependencies
         run: pip install -r requirements.txt 
+      - name: converting string to int
+        run: |
+          PORT=${{secrets.DATABASE_PORT}}
+          PORT_INT=${PORT}
+          EXPIRES=${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
+          EXPIRES_INT=${EXPIRES}
+          echo $PORT_INT
+          echo $EXPIRES_INT
       - name: test with pytest
         run: |
           pip install pytest
