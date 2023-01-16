@@ -47,13 +47,14 @@ jobs:
         run: python3 -m pip install --upgrade pip
       - name: install all dependencies
         run: pip install -r requirements.txt 
-      - name: test with pytest
-        run: |
-          pip install pytest
-          pytest
       - name: set DATABASE_PORT
         run: echo "expr ${{secrets.DATABASE_PORT}} + 0" | sh
         id: port
       - name: set ACCESS_TOKEN_EXPIRE_MINUTES
         run: echo "expr ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}} + 0" | sh
         id: expire
+      - name: test with pytest
+        run: |
+          pip install pytest
+          pytest
+      
