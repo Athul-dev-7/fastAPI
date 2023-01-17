@@ -66,11 +66,19 @@ This is a sample FastAPI CRUD application that uses a PostgreSQL database.
 
 -   Run the following command to apply the database migrations:
 
-`alembic upgrade head`
+    `alembic upgrade head`
 
 #### 6. Start the application:
 
 `uvicorn main.app:app --reload`
+
+#### 7. To run the test cases:
+
+`pytest`
+
+#### 8. To get the test coverage:
+
+`coverage report -m `
 
 The application will be available at http://localhost:8000.
 
