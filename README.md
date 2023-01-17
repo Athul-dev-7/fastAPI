@@ -72,6 +72,8 @@ This is a sample FastAPI CRUD application that uses a PostgreSQL database.
 
 `uvicorn main.app:app --reload`
 
+The application will be available at http://localhost:8000.
+
 #### 7. To run the test cases:
 
 `pytest`
@@ -79,8 +81,6 @@ This is a sample FastAPI CRUD application that uses a PostgreSQL database.
 #### 8. To get the test coverage:
 
 `coverage report -m `
-
-The application will be available at http://localhost:8000.
 
 ## To run the application in a Docker container
 
