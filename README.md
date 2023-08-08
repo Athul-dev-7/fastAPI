@@ -70,7 +70,7 @@ This is a sample FastAPI CRUD application that uses a PostgreSQL database.
 
 #### 6. Start the application:
 
-`uvicorn main.app:app --reload`
+`uvicorn app.main:app --reload`
 
 The application will be available at http://localhost:8000.
 
